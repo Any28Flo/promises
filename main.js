@@ -56,6 +56,7 @@ const endpoint = 'https://fakestoreapi.com/products';
 //const endpoint = 'https://pokeapi.co/api/v2/pokemon/ditto'
 //promesa
 const promise = fetch(endpoint);
+
 console.log(`Estado de la promesa : ${promise}`)
 //Status 200 -> ok 
 promise
@@ -72,9 +73,70 @@ promise
     .then(function (data){
         //Ejecuta estas instrucciones
         //imprime en consola
-        console.log(data)
+        //console.log(data)
+        //
+        createCards(data)
+        saveLocalStorage(data)
     })
     //Si sucede un error
     .catch(function(error){
         console.log(error)
     })
+
+    function saveLocalStorage(products){
+        //Crear elementos en el window.storage
+        //setItem(nombreKey,informacion)
+        window.localStorage.setItem('items', JSON.stringify(products) )
+
+    }
+
+    function createCards(products){
+        const ancla = document.getElementById('products');
+        //ul
+        const listaContainer = document.getElementById('producList');
+
+        let plantillaFinal = '';
+        let listaFinal ='';
+
+        products.forEach(function(product){
+            //producto es te tipo objeto
+            //objeto tiene propiedades que puede mediante el punto
+
+            let card = `
+            <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="${product.image}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">${product.title}</h5>
+                    <p class="card-text">${product.description}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            </div>
+            `
+            let item = `
+                <li>${product.title}}</li>
+            `;
+
+            //A mi plantilla final agregale una card
+            //por cada producto
+            plantillaFinal = plantillaFinal + card;
+            listaFinal += item;
+
+            console.log(product)
+            //console.log(product[id])
+        })
+        ancla.innerHTML = plantillaFinal;
+        listaContainer.innerHTML =listaFinal;
+
+
+    }// createCards
+
+    function addArticle(evento){
+        //
+        evento.preventDefault()
+
+    }
+
+    const btnAddProduct = document.getElementById('form-add-product');
+    btnAddProduct.addEventListener('submit',addArticle );
