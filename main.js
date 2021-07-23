@@ -22,7 +22,7 @@ declaracionPromise
     // si se realiza exitosamente entonces ->
     .then(function(){
         //Ejecuta esta parte 
-        console.log("Ya me dio una respuesta")
+       // console.log("Ya me dio una respuesta")
     })
     //catch -> Si no se cumple exitosamente 
     .catch(error=>{
@@ -123,7 +123,7 @@ promise
             plantillaFinal = plantillaFinal + card;
             listaFinal += item;
 
-            console.log(product)
+           // console.log(product)
             //console.log(product[id])
         })
         ancla.innerHTML = plantillaFinal;
@@ -133,10 +133,68 @@ promise
     }// createCards
 
     function addArticle(evento){
-        //
+        //prevenimos el defualt
         evento.preventDefault()
+        //Traer los valores
+        let title = document.getElementById('title').value;
+        let price = parseFloat( document.getElementById('price').value);
+        let description = document.getElementById('description').value;
+        let url = document.getElementById('image').value;
+        let category = document.getElementById('category').value;
+        let id = parseInt(document.getElementById('id').value);
+        console.log(title)
+        console.log(description)
+        console.log(price)
+        console.log(url)
+        console.log(category)
+        //Mostrar en el html
+        //Guardar mi nuevo obj dentro del arreglo 
+        //Creamos nuevo objeto
+        //obj llave: valor
+        const newProduct = {
+            "id" : id ,
+            "title": title,
+            "price" : price,
+            "description" : description,
+            "image": url,
+            "category" : category
+        }
+        //1. leemos la base de datos
+        //JSON.parse -> conviertelo a arreglo
+        const arregloProductos = JSON.parse( window.localStorage.getItem('items'))
+
+        console.log(arregloProductos)
+        // 2. push metodo ingresar, guardar un nuevo elemento
+        // const newProduct = {
+        //     "id" : arregloProductos.lenght +1 ,
+        //     "title": title,
+        //     "price" : price,
+        //     "description" : description,
+        //     "imageUrl": url,
+        //     "category" : category
+        // }
+        arregloProductos.push(newProduct);
+        
+        console.log(arregloProductos)
+        //3 agregarlo en el local storage
+        //arregloProductos -> array -> JSON
+        //Guardalo en la bd
+        window.localStorage.setItem('items', JSON.stringify( arregloProductos))
+        //volver a crear el dom o las etiquetas
+
+        //apendChild
+        lista.apendChild(card)
+
+
 
     }
 
     const btnAddProduct = document.getElementById('form-add-product');
-    btnAddProduct.addEventListener('submit',addArticle );
+    btnAddProduct.addEventListener('submit',addArticle )
+    const btnReload = document.getElementById('reload');
+
+    btnReload.addEventListener('click', function(){
+        const prodctos =  JSON.parse( window.localStorage.getItem('items'))
+        createCards(prodctos)
+
+    })
