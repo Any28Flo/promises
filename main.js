@@ -109,7 +109,7 @@ promise
                 <div class="card-body">
                     <h5 class="card-title">${product.title}</h5>
                     <p class="card-text">${product.description}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="detail.html?id=${product.id}" class="btn btn-primary">See details</a>
                 </div>
             </div>
             </div>
@@ -122,7 +122,10 @@ promise
             //por cada producto
             plantillaFinal = plantillaFinal + card;
             listaFinal += item;
-
+            //Query selector
+            //Es mandar parametros por medio de la la url
+            //endopoint ? nombre = valor 
+            //si queremos agregar mas -> &
            // console.log(product)
             //console.log(product[id])
         })
