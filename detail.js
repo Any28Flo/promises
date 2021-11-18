@@ -1,8 +1,9 @@
+//const { default: Swal } = require("sweetalert2");
+
 function searchOnUrl(){
     let url = location.search;
     let params = new URLSearchParams(url);
     let idParam = params.get("id");
-    console.log(idParam);
     return idParam;
 }
 function searchOnDatabase(idProducto){
@@ -42,7 +43,18 @@ window.onload = function(){
    const btnAgregar = document.getElementById('btn-add-car');
 
    btnAgregar.addEventListener('click', function (){
-       alert('Agregado al carrito');
+       //alert('Agregado al carrito');
+    //    new Swal(
+    //        'Echo',
+    //        'Agregado correctamente al carrito!',
+    //        'success'
+    //    )
+      new Swal({
+        icon: 'success',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+       
+      })
    })
 
 
